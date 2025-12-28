@@ -1,0 +1,64 @@
+model:
+  name: "gpt-4"
+  temperature: 0.3
+  max_tokens: 1000
+  
+agents:
+  classifier:
+    enabled: true
+    timeout: 30
+    retry_attempts: 3
+    
+  router:
+    enabled: true
+    timeout: 20
+    retry_attempts: 2
+    
+  response_generator:
+    enabled: true
+    timeout: 40
+    retry_attempts: 3
+    
+  escalation_handler:
+    enabled: true
+    timeout: 25
+    retry_attempts: 2
+
+priority_thresholds:
+  urgent:
+    sentiment_score: -0.7
+    escalation_keyword_count: 2
+    
+  high:
+    sentiment_score: -0.5
+    escalation_keyword_count: 1
+    
+  medium:
+    sentiment_score: 0.0
+    
+  low:
+    sentiment_score: 0.5
+
+department_mappings:
+  technical:
+    - technical_support
+    - escalation_team
+    
+  billing:
+    - billing_support
+    - escalation_team
+    
+  general:
+    - customer_success
+    
+  account:
+    - customer_success
+    - billing_support
+    
+  feature_request:
+    - product_team
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "support_system.log"
